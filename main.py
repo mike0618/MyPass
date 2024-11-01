@@ -70,7 +70,7 @@ class TUI:
                 case "c":
                     self.get_pass()
                 case "g":
-                    p = engine2.passgen()
+                    p = engine.passgen()
                     self.pw = self.input_engine(8, inp=p)
                 case "s":
                     self.save_pw()
@@ -82,7 +82,7 @@ class TUI:
                 #     self.test()
                 case _:
                     self.cd = False
-        engine2.close()
+        engine.close()
 
     def countdown(self):
         self.cd = True
@@ -200,11 +200,11 @@ class TUI:
         return inp
 
     def input_site(self):
-        self.s_lst = [s[0] for s in engine2.sitelist()]
+        self.s_lst = [s[0] for s in engine.sitelist()]
         self.site = self.select_entry(self.s_lst, 4)
 
     def input_login(self):
-        self.l_lst = [lg[0] for lg in engine2.loginlist(self.site)]
+        self.l_lst = [lg[0] for lg in engine.loginlist(self.site)]
         self.login = self.select_entry(self.l_lst, 6)
 
     def insert_entries(self, win, lst):
@@ -308,7 +308,7 @@ class TUI:
 
     def get_pass(self, show=False):
         self.pwin.clear()
-        pw = pw1 = engine2.get_pass(self.kw, self.site, self.login)
+        pw = pw1 = engine.get_pass(self.kw, self.site, self.login)
         if pw1 == 2:
             pw1 = "This website does not exist"
         elif pw1 == 3:
@@ -343,7 +343,7 @@ class TUI:
             self.l_lst.append(self.login)
         if self.site not in self.s_lst:
             self.s_lst.append(self.site)
-        engine2.save(self.kw, self.pw, self.site, self.login)
+        engine.save(self.kw, self.pw, self.site, self.login)
         self.message(
             " Saved ",
             f"Password for\nWebsite: {self.site}\n  Login: {self.login}\nhas been saved",
@@ -353,10 +353,10 @@ class TUI:
     def delete(self):
         if self.site and self.login:
             msg = f"You are about to delete Login:\n{self.login}\nfor Website:\n{self.site}"
-            self.do_delete(msg, 6, engine2.del_creds)
+            self.do_delete(msg, 6, engine.del_creds)
         elif self.site:
             msg = f"You are about to delete Website:\n{self.site}"
-            self.do_delete(msg, 4, engine2.del_site)
+            self.do_delete(msg, 4, engine.del_site)
         self.stdscr.touchwin()
         self.stdscr.refresh()
 
