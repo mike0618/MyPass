@@ -318,9 +318,10 @@ class TUI:
                 pyperclip.copy(pw)
                 pw1 = "The password has been copied"
             except pyperclip.PyperclipException as err:
-                pw1 = " ".join([line.strip() for line in str(err).splitlines()])[
-                    : self.maxx_i
-                ].strip()
+                # pw1 = " ".join([line.strip() for line in str(err).splitlines()])[
+                #     : self.maxx_i - 2
+                # ].strip()
+                pw1 = "Pyperclip does not work without display"
         self.pwin.addstr(pw1, self.mag_black | curses.A_BOLD)
         self.pwin.refresh()
         if pw not in (2, 3):
